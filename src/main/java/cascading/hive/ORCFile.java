@@ -193,8 +193,15 @@ public class ORCFile extends Scheme<JobConf, RecordReader, OutputCollector, Obje
             if (fs.isFile(statusPath)) {
                 Reader reader = OrcFile.createReader(fs, statusPath);
                 StructObjectInspector soi = (StructObjectInspector) reader.getObjectInspector();
-                extractSourceFields(soi);
+                if (soi.getAllStructFieldRefs().size() != 0) {
+                    extractSourceFields(soi);
+                    break;
+                }
             }
+        }
+        
+        if (getSourceFields().size() == 0) {
+            throw new IOException("unable to infer schema. please specify manually");
         }
     }
     

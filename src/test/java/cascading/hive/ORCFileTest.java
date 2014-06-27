@@ -235,6 +235,17 @@ public class ORCFileTest {
     }
     
     @Test
+    public void testEmptyFileInference() throws IOException {
+        String pathWithEmptyFile = "rain-orc";
+        
+        Lfs orcInput = new Lfs(new ORCFile(), pathWithEmptyFile);
+        TupleEntryIterator iter = orcInput.openForRead(new HadoopFlowProcess());
+        TupleEntry entry = iter.next();
+        assertTrue(entry.getFields().size() != 0);
+        iter.close();
+    }
+    
+    @Test
     public void testSchemaInferenceIt() throws IOException {
         // wordcount: integrated test with flow controller
         //
