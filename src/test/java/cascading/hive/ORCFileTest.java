@@ -235,8 +235,8 @@ public class ORCFileTest {
     }
     
     @Test
-    public void testEmptyFileInference() throws IOException {
-        String pathWithEmptyFile = "rain-orc";
+    public void testInputWithEmpty() throws IOException {
+        String pathWithEmptyFile = "src/test/resources/data/test.with.empty";
         
         Lfs orcInput = new Lfs(new ORCFile(), pathWithEmptyFile);
         TupleEntryIterator iter = orcInput.openForRead(new HadoopFlowProcess());
